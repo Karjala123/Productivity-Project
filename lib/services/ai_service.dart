@@ -16,15 +16,19 @@ class AiService {
   }) async {
     try {
       // Build context for AI
-      final context =
-          _buildProductivityContext(user, weeklyData, recentSessions);
+      final context = _buildProductivityContext(
+        user,
+        weeklyData,
+        recentSessions,
+      );
 
       final response = await _dio.post(
         '$_baseUrl/ai/suggestions',
         data: {
           'userId': user.uid,
           'context': context,
-          'prompt': '''
+          'prompt':
+              '''
 Analyze this user's productivity data and generate 5 personalized suggestions.
 Return a JSON array with objects containing: title, description, category (focus/break/app_usage/schedule), priority (high/medium/low).
 
@@ -67,10 +71,12 @@ $context
   }) async {
     try {
       final conversationHistory = history
-          .map((m) => {
-                'role': m.isUser ? 'user' : 'assistant',
-                'content': m.content,
-              })
+          .map(
+            (m) => {
+              'role': m.isUser ? 'user' : 'assistant',
+              'content': m.content,
+            },
+          )
           .toList();
 
       final response = await _dio.post(
@@ -78,7 +84,8 @@ $context
         data: {
           'message': message,
           'history': conversationHistory,
-          'systemContext': '''
+          'systemContext':
+              '''
 You are an AI productivity coach for ${user.name}. 
 Help them improve their focus, manage digital wellness, and optimize their work habits.
 Current productivity score: ${user.productivityScore}/100.
@@ -105,7 +112,10 @@ Be concise, actionable, and motivating.
 
   // Generate a context-aware local response for the chatbot
   String _generateLocalChatReply(
-      String message, UserModel user, Map<String, dynamic> userData) {
+    String message,
+    UserModel user,
+    Map<String, dynamic> userData,
+  ) {
     final msg = message.toLowerCase();
     final todayMins = userData['todayMinutes'] ?? 0;
 
@@ -139,8 +149,11 @@ Be concise, actionable, and motivating.
   }
 
   // Build context string from user data
-  String _buildProductivityContext(UserModel user,
-      Map<String, dynamic> weeklyData, List<ProductivitySession> sessions) {
+  String _buildProductivityContext(
+    UserModel user,
+    Map<String, dynamic> weeklyData,
+    List<ProductivitySession> sessions,
+  ) {
     final appUsage = weeklyData['appUsageTotals'] as Map<String, int>? ?? {};
     final topApps = appUsage.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
@@ -158,7 +171,9 @@ Average Session Duration: ${sessions.isEmpty ? 0 : sessions.map((s) => s.duratio
 
   // Local fallback suggestions
   List<AiSuggestion> _getFallbackSuggestions(
-      UserModel user, Map<String, dynamic> weeklyData) {
+    UserModel user,
+    Map<String, dynamic> weeklyData,
+  ) {
     return [
       AiSuggestion(
         id: 'fallback_1',
@@ -217,13 +232,15 @@ Average Session Duration: ${sessions.isEmpty ? 0 : sessions.map((s) => s.duratio
 
     if (focusMinutes > 120)
       score += 20;
-    else if (focusMinutes > 60) score += 10;
+    else if (focusMinutes > 60)
+      score += 10;
 
     if (breaksTaken >= 2 && breaksTaken <= 5) score += 15;
 
     if (distractions < 3)
       score += 15;
-    else if (distractions > 10) score -= 10;
+    else if (distractions > 10)
+      score -= 10;
 
     return score.clamp(0, 100);
   }

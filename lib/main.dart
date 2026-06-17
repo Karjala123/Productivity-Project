@@ -19,9 +19,7 @@ import 'utils/app_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Background service removed from main to prevent boot crash
   // await BackgroundBlockerService.initializeService();
@@ -110,21 +108,30 @@ class _SplashLoader extends StatelessWidget {
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Icon(Icons.psychology_outlined,
-                    color: Colors.white, size: 56),
+                child: const Icon(
+                  Icons.psychology_outlined,
+                  color: Colors.white,
+                  size: 56,
+                ),
               ),
               const SizedBox(height: 24),
-              const Text('ProductivityAI',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w700)),
+              const Text(
+                'ProductivityAI',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               const SizedBox(height: 8),
-              const Text('Your AI Productivity Coach',
-                  style: TextStyle(color: Colors.white70, fontSize: 14)),
+              const Text(
+                'Your AI Productivity Coach',
+                style: TextStyle(color: Colors.white70, fontSize: 14),
+              ),
               const SizedBox(height: 48),
               const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.white)),
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              ),
             ],
           ),
         ),

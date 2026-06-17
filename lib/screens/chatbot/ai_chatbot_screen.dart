@@ -129,19 +129,24 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.psychology_outlined,
-                  color: Colors.white, size: 16),
+              child: const Icon(
+                Icons.psychology_outlined,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('AI Coach', style: TextStyle(fontSize: 16)),
-                Text('Powered by Claude AI',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontSize: 11, color: AppColors.accent)),
+                Text(
+                  'Powered by Claude AI',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 11,
+                    color: AppColors.accent,
+                  ),
+                ),
               ],
             ),
           ],
@@ -177,17 +182,20 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
                       child: Container(
                         margin: const EdgeInsets.only(right: 8),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 8),
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: AppColors.divider),
                         ),
-                        child: Text(prompt,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontSize: 12)),
+                        child: Text(
+                          prompt,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(fontSize: 12),
+                        ),
                       ),
                     );
                   }).toList(),
@@ -199,8 +207,7 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: _messages.length + (_isTyping ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index == _messages.length && _isTyping) {
@@ -235,7 +242,9 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 12),
+                        horizontal: 18,
+                        vertical: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -250,8 +259,11 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
                       ),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.send_rounded,
-                        color: Colors.white, size: 20),
+                    child: const Icon(
+                      Icons.send_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ],
@@ -275,8 +287,9 @@ class _MessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
-        mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isUser) ...[
@@ -288,8 +301,11 @@ class _MessageBubble extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.psychology_outlined,
-                  color: Colors.white, size: 14),
+              child: const Icon(
+                Icons.psychology_outlined,
+                color: Colors.white,
+                size: 14,
+              ),
             ),
             const SizedBox(width: 8),
           ],
@@ -304,9 +320,7 @@ class _MessageBubble extends StatelessWidget {
                   bottomLeft: Radius.circular(isUser ? 18 : 4),
                   bottomRight: Radius.circular(isUser ? 4 : 18),
                 ),
-                border: isUser
-                    ? null
-                    : Border.all(color: AppColors.divider),
+                border: isUser ? null : Border.all(color: AppColors.divider),
               ),
               child: Text(
                 message.content,
@@ -340,8 +354,11 @@ class _TypingIndicator extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(Icons.psychology_outlined,
-                color: Colors.white, size: 14),
+            child: const Icon(
+              Icons.psychology_outlined,
+              color: Colors.white,
+              size: 14,
+            ),
           ),
           const SizedBox(width: 8),
           Container(
@@ -392,10 +409,14 @@ class _DotState extends State<_Dot> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    Future.delayed(Duration(milliseconds: widget.delay),
-        () => _controller.repeat(reverse: true));
-    _animation = Tween<double>(begin: 0.4, end: 1.0).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    Future.delayed(
+      Duration(milliseconds: widget.delay),
+      () => _controller.repeat(reverse: true),
+    );
+    _animation = Tween<double>(
+      begin: 0.4,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

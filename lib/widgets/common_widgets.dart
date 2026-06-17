@@ -43,33 +43,40 @@ class StatCard extends StatelessWidget {
                 color: (iconColor ?? AppColors.primary).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon,
-                  color: iconColor ?? AppColors.primary, size: 18),
+              child: Icon(
+                icon,
+                color: iconColor ?? AppColors.primary,
+                size: 18,
+              ),
             ),
             const SizedBox(height: 8),
-            Text(value,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20)),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
             const SizedBox(height: 2),
-            Text(label,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+              ),
+            ),
             if (subtitle != null) ...[
               const SizedBox(height: 2),
-              Text(subtitle!,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(
-                          color: AppColors.success,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500)),
+              Text(
+                subtitle!,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.success,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
           ],
         ),
@@ -122,14 +129,19 @@ class ScoreRing extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('$score',
-                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w700, color: _scoreColor)),
-              Text('Score',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontSize: 11)),
+              Text(
+                '$score',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: _scoreColor,
+                ),
+              ),
+              Text(
+                'Score',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontSize: 11),
+              ),
             ],
           ),
         ],
@@ -163,13 +175,18 @@ class PriorityBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-          color: bg, borderRadius: BorderRadius.circular(20)),
-      child: Text(priority.toUpperCase(),
-          style: TextStyle(
-              color: text,
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.5)),
+        color: bg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        priority.toUpperCase(),
+        style: TextStyle(
+          color: text,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5,
+        ),
+      ),
     );
   }
 }
@@ -205,10 +222,13 @@ class AppTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) ...[
-          Text(label!,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary)),
+          Text(
+            label!,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.textPrimary,
+            ),
+          ),
           const SizedBox(height: 8),
         ],
         TextFormField(
@@ -218,12 +238,12 @@ class AppTextField extends StatelessWidget {
           keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hint,
-            prefixIcon:
-                prefixIcon != null ? Icon(prefixIcon, size: 20) : null,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 20) : null,
             suffixIcon: suffixIcon != null
                 ? GestureDetector(
                     onTap: onSuffixTap,
-                    child: Icon(suffixIcon, size: 20))
+                    child: Icon(suffixIcon, size: 20),
+                  )
                 : null,
           ),
         ),
@@ -254,11 +274,12 @@ class SectionHeader extends StatelessWidget {
         if (actionLabel != null)
           GestureDetector(
             onTap: onAction,
-            child: Text(actionLabel!,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(fontSize: 13)),
+            child: Text(
+              actionLabel!,
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(fontSize: 13),
+            ),
           ),
       ],
     );
@@ -286,14 +307,16 @@ class LoadingOverlay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(AppColors.primary)),
+                valueColor: AlwaysStoppedAnimation(AppColors.primary),
+              ),
               if (message != null) ...[
                 const SizedBox(height: 16),
-                Text(message!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w500)),
+                Text(
+                  message!,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+                ),
               ],
             ],
           ),
@@ -338,16 +361,18 @@ class AppUsageBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(appName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w500)),
-                Text(timeStr,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.textSecondary)),
+                Text(
+                  appName,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  timeStr,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 6),

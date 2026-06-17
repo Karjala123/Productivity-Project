@@ -39,7 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text(auth.errorMessage ?? 'Login failed'),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       );
     }
@@ -56,7 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
             content: Text(errorMsg),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         );
       }
@@ -98,11 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Image.asset(
                         'assets/images/logo.png',
                         height: 80,
-                        errorBuilder: (context, error, stackTrace) => const Icon(
-                          Icons.psychology_outlined,
-                          color: Colors.white,
-                          size: 60,
-                        ),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(
+                              Icons.psychology_outlined,
+                              color: Colors.white,
+                              size: 60,
+                            ),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -110,7 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       delay: const Duration(milliseconds: 200),
                       child: Text(
                         'Welcome Back!',
-                        style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge
+                            ?.copyWith(
                               color: Colors.white,
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
@@ -124,9 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Sign in to continue your productivity journey',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.white.withOpacity(0.9),
-                              fontSize: 16,
-                            ),
+                          color: Colors.white.withOpacity(0.9),
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -164,7 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             'Login',
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.textPrimary,
                                 ),
@@ -178,8 +185,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Email is required';
-                              if (!v.contains('@')) return 'Enter a valid email';
+                              if (v == null || v.isEmpty)
+                                return 'Email is required';
+                              if (!v.contains('@'))
+                                return 'Enter a valid email';
                               return null;
                             },
                           ),
@@ -194,10 +203,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : Icons.visibility_off_outlined,
                             obscureText: _obscurePassword,
                             controller: _passwordController,
-                            onSuffixTap: () =>
-                                setState(() => _obscurePassword = !_obscurePassword),
+                            onSuffixTap: () => setState(
+                              () => _obscurePassword = !_obscurePassword,
+                            ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Password is required';
+                              if (v == null || v.isEmpty)
+                                return 'Password is required';
                               if (v.length < 6) return 'Minimum 6 characters';
                               return null;
                             },
@@ -226,7 +237,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 24,
                                     width: 24,
                                     child: CircularProgressIndicator(
-                                        color: Colors.white, strokeWidth: 3))
+                                      color: Colors.white,
+                                      strokeWidth: 3,
+                                    ),
+                                  )
                                 : const Text('Sign In'),
                           ),
                           const SizedBox(height: 24),
@@ -240,15 +254,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'https://www.google.com/favicon.ico',
                                   height: 20,
                                   errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(Icons.g_mobiledata,
-                                          color: AppColors.primary, size: 24),
+                                      const Icon(
+                                        Icons.g_mobiledata,
+                                        color: AppColors.primary,
+                                        size: 24,
+                                      ),
                                 ),
                                 const SizedBox(width: 12),
                                 const Flexible(
                                   child: Text(
                                     'Continue with Google',
                                     style: TextStyle(
-                                        fontSize: 14, fontWeight: FontWeight.w600),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -269,7 +288,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => const RegisterScreen()),
+                                    builder: (_) => const RegisterScreen(),
+                                  ),
                                 ),
                                 child: const Text(
                                   'Sign Up',

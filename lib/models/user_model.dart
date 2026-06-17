@@ -119,7 +119,11 @@ class ProductivitySession {
       focusScore: data['focusScore'] ?? 0,
       sessionType: data['sessionType'] ?? 'focus',
       appsUsed: List<String>.from(data['appsUsed'] ?? []),
-      appUsageMinutes: (data['appUsageMinutes'] as Map<String, dynamic>?)?.map((k, v) => MapEntry(k, (v as num).toInt())) ?? {},
+      appUsageMinutes:
+          (data['appUsageMinutes'] as Map<String, dynamic>?)?.map(
+            (k, v) => MapEntry(k, (v as num).toInt()),
+          ) ??
+          {},
     );
   }
 

@@ -25,18 +25,22 @@ class ProductivityService {
   }
 
   // Get sessions for a user
-  Future<List<ProductivitySession>> getSessions(String userId,
-      {int limit = 30}) async {
+  Future<List<ProductivitySession>> getSessions(
+    String userId, {
+    int limit = 30,
+  }) async {
     final query = await _firestore
         .collection('sessions')
         .where('userId', isEqualTo: userId)
         .get();
 
-    final sessions = query.docs.map((d) => ProductivitySession.fromFirestore(d)).toList();
-    
+    final sessions = query.docs
+        .map((d) => ProductivitySession.fromFirestore(d))
+        .toList();
+
     // Sort client-side to avoid requiring composite indices in Firestore
     sessions.sort((a, b) => b.startTime.compareTo(a.startTime));
-    
+
     return sessions.take(limit).toList();
   }
 
@@ -44,12 +48,16 @@ class ProductivityService {
   Future<List<ProductivitySession>> getTodaySessions(String userId) async {
     // Fetch all sessions and filter client-side to avoid composite index requirements
     final allSessions = await getSessions(userId, limit: 100);
-    
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     return allSessions.where((s) {
-      final sDate = DateTime(s.startTime.year, s.startTime.month, s.startTime.day);
+      final sDate = DateTime(
+        s.startTime.year,
+        s.startTime.month,
+        s.startTime.day,
+      );
       return sDate.isAtSameMomentAs(today);
     }).toList();
   }
@@ -76,8 +84,7 @@ class ProductivityService {
 
     for (var doc in sessionsDocs) {
       final session = ProductivitySession.fromFirestore(doc);
-      final dayKey =
-          '${session.startTime.month}/${session.startTime.day}';
+      final dayKey = '${session.startTime.month}/${session.startTime.day}';
       dailyMinutes[dayKey] =
           (dailyMinutes[dayKey] ?? 0) + session.durationSeconds;
       dailyScore[dayKey] =
@@ -97,8 +104,7 @@ class ProductivityService {
   }
 
   // Save AI suggestion
-  Future<void> saveAiSuggestion(
-      String userId, AiSuggestion suggestion) async {
+  Future<void> saveAiSuggestion(String userId, AiSuggestion suggestion) async {
     await _firestore
         .collection('users')
         .doc(userId)
@@ -122,7 +128,10 @@ class ProductivityService {
 
   // Mark suggestion as read/applied
   Future<void> updateSuggestion(
-      String userId, String suggestionId, Map<String, dynamic> data) async {
+    String userId,
+    String suggestionId,
+    Map<String, dynamic> data,
+  ) async {
     await _firestore
         .collection('users')
         .doc(userId)
@@ -136,14 +145,13 @@ class ProductivityService {
     if (sessions.isEmpty) return 0;
     final avgScore =
         sessions.map((s) => s.focusScore).reduce((a, b) => a + b) ~/
-            sessions.length;
+        sessions.length;
     return avgScore.clamp(0, 100);
   }
 
   // Update daily streak
   Future<void> updateStreak(String userId) async {
-    final userDoc =
-        await _firestore.collection('users').doc(userId).get();
+    final userDoc = await _firestore.collection('users').doc(userId).get();
     final data = userDoc.data()!;
     final lastActive = data['lastActiveDate'] != null
         ? (data['lastActiveDate'] as Timestamp).toDate()
@@ -157,7 +165,11 @@ class ProductivityService {
     if (lastActive == null) {
       currentStreak = 1;
     } else {
-      final lastDate = DateTime(lastActive.year, lastActive.month, lastActive.day);
+      final lastDate = DateTime(
+        lastActive.year,
+        lastActive.month,
+        lastActive.day,
+      );
       final diff = today.difference(lastDate).inDays;
       if (diff == 1) {
         // Consecutive day — increment
@@ -173,7 +185,13 @@ class ProductivityService {
     int totalSessions = (data['totalSessions'] ?? 0) + 1;
     int activeDays = data['activeDays'] ?? 0;
 
-    if (lastActive == null || today.difference(DateTime(lastActive.year, lastActive.month, lastActive.day)).inDays >= 1) {
+    if (lastActive == null ||
+        today
+                .difference(
+                  DateTime(lastActive.year, lastActive.month, lastActive.day),
+                )
+                .inDays >=
+            1) {
       activeDays++;
     }
 

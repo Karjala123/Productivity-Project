@@ -133,13 +133,14 @@ class AuthService {
   // Update user name
   Future<void> updateName(String uid, String name) async {
     await _auth.currentUser?.updateDisplayName(name);
-    await _firestore.collection('users').doc(uid).update({
-      'name': name,
-    });
+    await _firestore.collection('users').doc(uid).update({'name': name});
   }
 
   // Update user settings (notification preferences, etc.)
-  Future<void> updateSettings(String uid, Map<String, dynamic> newSettings) async {
+  Future<void> updateSettings(
+    String uid,
+    Map<String, dynamic> newSettings,
+  ) async {
     await _firestore.collection('users').doc(uid).update({
       'settings': newSettings,
     });

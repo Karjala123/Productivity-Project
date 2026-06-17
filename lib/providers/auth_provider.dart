@@ -65,7 +65,9 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       _userModel = await _authService.loginWithEmail(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       _status = AuthStatus.authenticated;
       notifyListeners();
       return true;

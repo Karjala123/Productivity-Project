@@ -12,23 +12,31 @@ class SystemAppUsageService {
 
     if (!kIsWeb && Platform.isAndroid) {
       try {
-        List<AppUsageInfo> rawList = await AppUsage().getAppUsage(startDate, endDate);
-        
+        List<AppUsageInfo> rawList = await AppUsage().getAppUsage(
+          startDate,
+          endDate,
+        );
+
         for (var info in rawList) {
           // Filter out distracting system packages
           if (_isSystemApp(info.packageName)) continue;
           if (info.usage.inMinutes < 1) continue;
 
-          String friendlyName = _getFriendlyAppName(info.packageName, info.appName);
-          
-          infoList.add(_MockAppUsageInfo(
-            friendlyName, 
-            info.packageName, 
-            info.usage, 
-            info.startDate, 
-            info.endDate, 
-            info.lastForeground
-          ));
+          String friendlyName = _getFriendlyAppName(
+            info.packageName,
+            info.appName,
+          );
+
+          infoList.add(
+            _MockAppUsageInfo(
+              friendlyName,
+              info.packageName,
+              info.usage,
+              info.startDate,
+              info.endDate,
+              info.lastForeground,
+            ),
+          );
         }
       } catch (e) {
         debugPrint('Error getting Android app usage: $e');
@@ -38,10 +46,38 @@ class SystemAppUsageService {
       // Return dummy data for Desktop/iOS/Web as native APIs aren't easily exposed
       if (kDebugMode || true) {
         infoList = [
-          _MockAppUsageInfo('Visual Studio Code', 'com.microsoft.vscode', const Duration(hours: 3, minutes: 20), startDate, endDate, endDate),
-          _MockAppUsageInfo('Chrome', 'com.google.chrome', const Duration(hours: 2, minutes: 15), startDate, endDate, endDate),
-          _MockAppUsageInfo('Slack', 'com.slack', const Duration(hours: 1, minutes: 30), startDate, endDate, endDate),
-          _MockAppUsageInfo('Spotify', 'com.spotify', const Duration(minutes: 45), startDate, endDate, endDate),
+          _MockAppUsageInfo(
+            'Visual Studio Code',
+            'com.microsoft.vscode',
+            const Duration(hours: 3, minutes: 20),
+            startDate,
+            endDate,
+            endDate,
+          ),
+          _MockAppUsageInfo(
+            'Chrome',
+            'com.google.chrome',
+            const Duration(hours: 2, minutes: 15),
+            startDate,
+            endDate,
+            endDate,
+          ),
+          _MockAppUsageInfo(
+            'Slack',
+            'com.slack',
+            const Duration(hours: 1, minutes: 30),
+            startDate,
+            endDate,
+            endDate,
+          ),
+          _MockAppUsageInfo(
+            'Spotify',
+            'com.spotify',
+            const Duration(minutes: 45),
+            startDate,
+            endDate,
+            endDate,
+          ),
         ];
       }
     }
@@ -52,10 +88,11 @@ class SystemAppUsageService {
   static bool _isSystemApp(String packageName) {
     final lower = packageName.toLowerCase();
     // Do not filter out primary apps even if they contain typical android package names
-    if (lower.contains('youtube') || lower == 'com.android.chrome') return false;
+    if (lower.contains('youtube') || lower == 'com.android.chrome')
+      return false;
 
     // Filter out standard background/OS processes
-    if (lower.startsWith('com.android.system') || 
+    if (lower.startsWith('com.android.system') ||
         lower.startsWith('com.android.providers') ||
         lower.startsWith('com.android.server') ||
         lower.startsWith('com.android.settings') ||
@@ -70,7 +107,7 @@ class SystemAppUsageService {
 
   static String _getFriendlyAppName(String packageName, String defaultName) {
     final lower = packageName.toLowerCase();
-    
+
     // Most popular packages directly mapped for beautiful UI
     if (lower.contains('youtube')) return 'YouTube';
     if (lower.contains('whatsapp')) return 'WhatsApp';
@@ -85,7 +122,10 @@ class SystemAppUsageService {
     if (lower.contains('discord')) return 'Discord';
     if (lower.contains('reddit')) return 'Reddit';
     if (lower.contains('maps')) return 'Maps';
-    if (lower.contains('twitter') || lower == 'com.twitter.android' || lower == 'com.x.x') return 'X (Twitter)';
+    if (lower.contains('twitter') ||
+        lower == 'com.twitter.android' ||
+        lower == 'com.x.x')
+      return 'X (Twitter)';
     if (lower.contains('linkedin')) return 'LinkedIn';
 
     // Fallback: capitalize the default token parsed by the package
@@ -108,5 +148,12 @@ class _MockAppUsageInfo implements AppUsageInfo {
   @override
   final DateTime lastForeground;
 
-  _MockAppUsageInfo(this.appName, this.packageName, this.usage, this.startDate, this.endDate, this.lastForeground);
+  _MockAppUsageInfo(
+    this.appName,
+    this.packageName,
+    this.usage,
+    this.startDate,
+    this.endDate,
+    this.lastForeground,
+  );
 }

@@ -4,8 +4,6 @@ import '../services/productivity_service.dart';
 import '../services/system_app_usage_service.dart';
 import 'package:app_usage/app_usage.dart';
 
-
-
 class ProductivityProvider extends ChangeNotifier {
   final ProductivityService _productivityService = ProductivityService();
 
@@ -45,13 +43,15 @@ class ProductivityProvider extends ChangeNotifier {
       _todaySessions = results[2] as List<ProductivitySession>;
       final userModel = results[3] as UserModel?;
       _systemAppUsage = results[4] as List<AppUsageInfo>;
-      
+
       if (userModel != null) {
         _currentScore = userModel.productivityScore;
       }
 
       _todayFocusMinutes = _todaySessions.fold(
-          0, (sum, session) => sum + (session.durationSeconds ~/ 60));
+        0,
+        (sum, session) => sum + (session.durationSeconds ~/ 60),
+      );
 
       // Fetch actual suggestions
       await refreshSuggestionsFromDb(userId);
@@ -67,13 +67,14 @@ class ProductivityProvider extends ChangeNotifier {
 
   Future<void> refreshSuggestionsFromDb(String userId) async {
     final rawSuggestions = await _productivityService.getAiSuggestions(userId);
-    
+
     if (rawSuggestions.isEmpty) {
       _suggestions = [
         AiSuggestion(
           id: 'sug_0',
           title: 'Try the Pomodoro Technique',
-          description: 'Based on your recent activity, we recommend focus techniques.',
+          description:
+              'Based on your recent activity, we recommend focus techniques.',
           category: 'focus',
           priority: 'medium',
           generatedAt: DateTime.now(),
@@ -81,7 +82,8 @@ class ProductivityProvider extends ChangeNotifier {
         AiSuggestion(
           id: 'sug_1',
           title: 'Reduce Social Media Usage',
-          description: 'Based on your recent activity, we recommend focus techniques.',
+          description:
+              'Based on your recent activity, we recommend focus techniques.',
           category: 'app_usage',
           priority: 'medium',
           generatedAt: DateTime.now(),
@@ -104,7 +106,8 @@ class ProductivityProvider extends ChangeNotifier {
     }
   }
 
-  Future<UserModel?> endFocusMode(UserModel user, {
+  Future<UserModel?> endFocusMode(
+    UserModel user, {
     int durationSeconds = 0,
     int focusScore = 80,
     Map<String, int> appUsage = const {},
@@ -139,7 +142,10 @@ class ProductivityProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> refreshSuggestions(UserModel user, Map<String, dynamic> weeklyData) async {
+  Future<void> refreshSuggestions(
+    UserModel user,
+    Map<String, dynamic> weeklyData,
+  ) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -172,7 +178,7 @@ class ProductivityProvider extends ChangeNotifier {
   List<Map<String, dynamic>> getThisWeekChartData() {
     final now = DateTime.now();
     final monday = now.subtract(Duration(days: now.weekday - 1));
-    
+
     final List<Map<String, dynamic>> chartData = [];
 
     for (int i = 0; i < 7; i++) {
@@ -182,13 +188,16 @@ class ProductivityProvider extends ChangeNotifier {
 
       final seconds = _weeklyData['dailyMinutes']?[dayKey] ?? 0;
       final score = _weeklyData['dailyScore']?[dayKey] ?? 0;
-      
+
       chartData.add({
         'day': dayLabel,
         'date': dayKey,
         'seconds': seconds,
         'score': score,
-        'isToday': date.year == now.year && date.month == now.month && date.day == now.day,
+        'isToday':
+            date.year == now.year &&
+            date.month == now.month &&
+            date.day == now.day,
       });
     }
 
@@ -197,14 +206,22 @@ class ProductivityProvider extends ChangeNotifier {
 
   String _getDayLabel(int weekday) {
     switch (weekday) {
-      case 1: return 'Mon';
-      case 2: return 'Tue';
-      case 3: return 'Wed';
-      case 4: return 'Thu';
-      case 5: return 'Fri';
-      case 6: return 'Sat';
-      case 7: return 'Sun';
-      default: return '';
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+      case 7:
+        return 'Sun';
+      default:
+        return '';
     }
   }
 

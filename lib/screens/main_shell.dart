@@ -27,17 +27,20 @@ class _MainShellState extends State<MainShell> {
   final List<_NavItem> _navItems = const [
     _NavItem(icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
     _NavItem(
-        icon: Icons.bar_chart_outlined,
-        activeIcon: Icons.bar_chart,
-        label: 'Analytics'),
+      icon: Icons.bar_chart_outlined,
+      activeIcon: Icons.bar_chart,
+      label: 'Analytics',
+    ),
     _NavItem(
-        icon: Icons.description_outlined,
-        activeIcon: Icons.description,
-        label: 'Reports'),
+      icon: Icons.description_outlined,
+      activeIcon: Icons.description,
+      label: 'Reports',
+    ),
     _NavItem(
-        icon: Icons.person_outline,
-        activeIcon: Icons.person,
-        label: 'Profile'),
+      icon: Icons.person_outline,
+      activeIcon: Icons.person,
+      label: 'Profile',
+    ),
   ];
 
   @override
@@ -76,19 +79,19 @@ class _MainShellState extends State<MainShell> {
               ),
               backgroundColor: AppColors.primary,
               elevation: 4,
-              child: const Icon(Icons.psychology_outlined,
-                  color: Colors.white, size: 26),
+              child: const Icon(
+                Icons.psychology_outlined,
+                color: Colors.white,
+                size: 26,
+              ),
             ),
           );
         }
- 
+
         // Mobile Layout
         final nav = context.watch<NavigationProvider>();
         return Scaffold(
-          body: IndexedStack(
-            index: nav.currentIndex,
-            children: _screens,
-          ),
+          body: IndexedStack(index: nav.currentIndex, children: _screens),
           floatingActionButton: FloatingActionButton(
             onPressed: () => Navigator.push(
               context,
@@ -96,10 +99,14 @@ class _MainShellState extends State<MainShell> {
             ),
             backgroundColor: AppColors.primary,
             elevation: 4,
-            child: const Icon(Icons.psychology_outlined,
-                color: Colors.white, size: 26),
+            child: const Icon(
+              Icons.psychology_outlined,
+              color: Colors.white,
+              size: 26,
+            ),
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: _BottomNavBar(
             currentIndex: nav.currentIndex,
             items: _navItems,
@@ -148,7 +155,11 @@ class _WebSidebar extends StatelessWidget {
                     color: AppColors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.psychology_outlined, color: AppColors.primary, size: 32),
+                  child: const Icon(
+                    Icons.psychology_outlined,
+                    color: AppColors.primary,
+                    size: 32,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 const Column(
@@ -194,24 +205,37 @@ class _WebSidebar extends StatelessWidget {
                         children: [
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 16,
+                            ),
                             decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFFFFF7F5) : Colors.transparent,
+                              color: isSelected
+                                  ? const Color(0xFFFFF7F5)
+                                  : Colors.transparent,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               children: [
                                 Icon(
-                                  isSelected ? entry.value.activeIcon : entry.value.icon,
-                                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                                  isSelected
+                                      ? entry.value.activeIcon
+                                      : entry.value.icon,
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : AppColors.textSecondary,
                                   size: 20,
                                 ),
                                 const SizedBox(width: 14),
                                 Text(
                                   entry.value.label,
                                   style: TextStyle(
-                                    color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                    color: isSelected
+                                        ? AppColors.primary
+                                        : AppColors.textSecondary,
+                                    fontWeight: isSelected
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -254,20 +278,28 @@ class _WebSidebar extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: currentIndex == 3 
-                        ? AppColors.primary.withOpacity(0.05) 
-                        : Colors.grey.withOpacity(0.05),
+                      color: currentIndex == 3
+                          ? AppColors.primary.withOpacity(0.05)
+                          : Colors.grey.withOpacity(0.05),
                       borderRadius: BorderRadius.circular(16),
-                      border: currentIndex == 3 
-                        ? Border.all(color: AppColors.primary.withOpacity(0.2)) 
-                        : null,
+                      border: currentIndex == 3
+                          ? Border.all(
+                              color: AppColors.primary.withOpacity(0.2),
+                            )
+                          : null,
                     ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           backgroundColor: AppColors.primary,
                           radius: 18,
-                          child: Text(userInitial, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            userInitial,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -275,10 +307,20 @@ class _WebSidebar extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userName, 
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, overflow: TextOverflow.ellipsis)
+                                userName,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              const Text('Pro Plan', style: TextStyle(color: Colors.grey, fontSize: 11)),
+                              const Text(
+                                'Pro Plan',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 11,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -289,10 +331,23 @@ class _WebSidebar extends StatelessWidget {
                 const SizedBox(height: 16),
                 TextButton.icon(
                   onPressed: () => authProvider.signOut(),
-                  icon: const Icon(Icons.logout, color: Colors.redAccent, size: 20),
-                  label: const Text('Sign Out', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.w600)),
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.redAccent,
+                    size: 20,
+                  ),
+                  label: const Text(
+                    'Sign Out',
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
                     minimumSize: const Size(double.infinity, 48),
                     alignment: Alignment.centerLeft,
                   ),
@@ -311,8 +366,11 @@ class _NavItem {
   final IconData activeIcon;
   final String label;
 
-  const _NavItem(
-      {required this.icon, required this.activeIcon, required this.label});
+  const _NavItem({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+  });
 }
 
 class _BottomNavBar extends StatelessWidget {
@@ -345,21 +403,35 @@ class _BottomNavBar extends StatelessWidget {
           child: Row(
             children: [
               // First 2 nav items
-              ...items.sublist(0, 2).asMap().entries.map((entry) =>
-                  Expanded(child: _NavBarItem(
-                    item: entry.value,
-                    isSelected: entry.key == currentIndex,
-                    onTap: () => onTap(entry.key),
-                  ))),
+              ...items
+                  .sublist(0, 2)
+                  .asMap()
+                  .entries
+                  .map(
+                    (entry) => Expanded(
+                      child: _NavBarItem(
+                        item: entry.value,
+                        isSelected: entry.key == currentIndex,
+                        onTap: () => onTap(entry.key),
+                      ),
+                    ),
+                  ),
               // FAB spacer
               const SizedBox(width: 72),
               // Last 2 nav items
-              ...items.sublist(2).asMap().entries.map((entry) =>
-                  Expanded(child: _NavBarItem(
-                    item: entry.value,
-                    isSelected: entry.key + 2 == currentIndex,
-                    onTap: () => onTap(entry.key + 2),
-                  ))),
+              ...items
+                  .sublist(2)
+                  .asMap()
+                  .entries
+                  .map(
+                    (entry) => Expanded(
+                      child: _NavBarItem(
+                        item: entry.value,
+                        isSelected: entry.key + 2 == currentIndex,
+                        onTap: () => onTap(entry.key + 2),
+                      ),
+                    ),
+                  ),
             ],
           ),
         ),
@@ -405,8 +477,7 @@ class _NavBarItem extends StatelessWidget {
               style: TextStyle(
                 color: isSelected ? AppColors.primary : AppColors.textHint,
                 fontSize: 11,
-                fontWeight:
-                    isSelected ? FontWeight.w600 : FontWeight.w400,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
           ],

@@ -72,9 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
             duration: const Duration(milliseconds: 400),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  ..._pages[_currentPage].gradient,
-                ],
+                colors: [..._pages[_currentPage].gradient],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -90,10 +88,13 @@ class _SplashScreenState extends State<SplashScreen> {
                   alignment: Alignment.topRight,
                   child: TextButton(
                     onPressed: _navigateToLogin,
-                    child: const Text('Skip',
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.w500)),
+                    child: const Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
 
@@ -166,8 +167,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           final isActive = index == _currentPage;
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 4),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
                             width: isActive ? 24 : 8,
                             height: 8,
                             decoration: BoxDecoration(

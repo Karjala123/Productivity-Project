@@ -41,10 +41,13 @@ class _LoadingScreen extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(AppColors.primary),
             ),
             SizedBox(height: 16),
-            Text('Loading…',
-                style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500)),
+            Text(
+              'Loading…',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),

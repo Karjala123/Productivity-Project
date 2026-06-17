@@ -7,7 +7,6 @@ import '../../providers/productivity_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
-
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({super.key});
 
@@ -32,9 +31,13 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
     super.dispose();
   }
 
-  void _showAppLimitDialog(BuildContext context, String appName, String packageName) async {
+  void _showAppLimitDialog(
+    BuildContext context,
+    String appName,
+    String packageName,
+  ) async {
     int limitMinutes = 30;
-    
+
     // Check overlay permission
     bool isPermissionGranted = await FlutterOverlayWindow.isPermissionGranted();
     if (!isPermissionGranted) {
@@ -54,26 +57,49 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
           builder: (context, setModalState) {
             return Padding(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                  left: 24, right: 24, top: 24),
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                left: 24,
+                right: 24,
+                top: 24,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Set Limit for $appName", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(
+                    "Set Limit for $appName",
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Text(
-                      "This will trigger a full-screen block card when you reach your limit while using $appName.",
-                      style: const TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 13,
-                          height: 1.4)),
+                    "This will trigger a full-screen block card when you reach your limit while using $appName.",
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Daily limit (minutes):", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-                      Text("${limitMinutes}m", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.primary)),
+                      const Text(
+                        "Daily limit (minutes):",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        "${limitMinutes}m",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: AppColors.primary,
+                        ),
+                      ),
                     ],
                   ),
                   Slider(
@@ -92,16 +118,21 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                   ElevatedButton(
                     onPressed: () async {
                       final prefs = await SharedPreferences.getInstance();
-                      await prefs.setDouble('limit_$packageName', limitMinutes.toDouble());
-                      
+                      await prefs.setDouble(
+                        'limit_$packageName',
+                        limitMinutes.toDouble(),
+                      );
+
                       if (context.mounted) Navigator.pop(ctx);
-                      
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Strict $limitMinutes min limit saved for $appName!"),
+                          content: Text(
+                            "Strict $limitMinutes min limit saved for $appName!",
+                          ),
                           backgroundColor: AppColors.success,
                           behavior: SnackBarBehavior.floating,
-                        )
+                        ),
                       );
                     },
                     child: const Text("Save Limit"),
@@ -112,24 +143,37 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
             );
           },
         );
-      }
+      },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
     final productivity = context.watch<ProductivityProvider>();
     final chartData = productivity.getThisWeekChartData();
-    final appUsage = productivity.weeklyData['appUsageTotals'] as Map<String, dynamic>? ?? {};
-    
-    final appUsageList = appUsage.entries.map((e) => {
-      'name': e.key,
-      'minutes': e.value is int ? e.value : (e.value as num).toInt(),
-      'productive': !['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Early Exit'].contains(e.key),
-    }).toList()..sort((a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int));
+    final appUsage =
+        productivity.weeklyData['appUsageTotals'] as Map<String, dynamic>? ??
+        {};
 
-
+    final appUsageList =
+        appUsage.entries
+            .map(
+              (e) => {
+                'name': e.key,
+                'minutes': e.value is int ? e.value : (e.value as num).toInt(),
+                'productive': ![
+                  'YouTube',
+                  'Instagram',
+                  'TikTok',
+                  'Facebook',
+                  'Early Exit',
+                ].contains(e.key),
+              },
+            )
+            .toList()
+          ..sort(
+            (a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int),
+          );
 
     // Calculate Today's App Usage
     final Map<String, Map<String, dynamic>> todayAppUsageData = {};
@@ -154,25 +198,46 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
       }
     }
 
-    final List<Map<String, dynamic>> todayAppUsageList = todayAppUsageData.entries.map((e) => <String, dynamic>{
-      'name': e.key,
-      'minutes': e.value['minutes'],
-      'packageName': e.value['packageName'],
-      'productive': !['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Early Exit'].contains(e.key),
-    }).toList()..sort((a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int));
+    final List<Map<String, dynamic>> todayAppUsageList =
+        todayAppUsageData.entries
+            .map(
+              (e) => <String, dynamic>{
+                'name': e.key,
+                'minutes': e.value['minutes'],
+                'packageName': e.value['packageName'],
+                'productive': ![
+                  'YouTube',
+                  'Instagram',
+                  'TikTok',
+                  'Facebook',
+                  'Early Exit',
+                ].contains(e.key),
+              },
+            )
+            .toList()
+          ..sort(
+            (a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int),
+          );
 
-
-    final todayTotalUsage = todayAppUsageList.fold(0, (sum, a) => sum + (a['minutes'] as int));
+    final todayTotalUsage = todayAppUsageList.fold(
+      0,
+      (sum, a) => sum + (a['minutes'] as int),
+    );
 
     // Calculate Avg Daily Focus
-    final totalWeeklySeconds = chartData.fold<int>(0, (sum, day) => sum + ((day['seconds'] as num).toInt()));
+    final totalWeeklySeconds = chartData.fold<int>(
+      0,
+      (sum, day) => sum + ((day['seconds'] as num).toInt()),
+    );
     final avgWeeklySeconds = totalWeeklySeconds / 7;
-    
+
     String avgFocusStr;
     if (avgWeeklySeconds >= 3600) {
-      avgFocusStr = '${(avgWeeklySeconds / 3600).floor()}h ${((avgWeeklySeconds % 3600) / 60).floor()}m';
+      avgFocusStr =
+          '${(avgWeeklySeconds / 3600).floor()}h ${((avgWeeklySeconds % 3600) / 60).floor()}m';
     } else if (avgWeeklySeconds >= 60) {
-      avgFocusStr = '${(avgWeeklySeconds / 60).floor()}m ${avgWeeklySeconds.toInt() % 60}s';
+      avgFocusStr =
+          '${(avgWeeklySeconds / 60).floor()}m ${avgWeeklySeconds.toInt() % 60}s';
     } else {
       avgFocusStr = '${avgWeeklySeconds.toInt()}s';
     }
@@ -182,13 +247,19 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
     final distractionMinutes = appUsageList
         .where((a) => a['productive'] == false)
         .fold(0, (sum, a) => sum + (a['minutes'] as int));
-        
+
     int productivePercent = 0;
     if (totalWeeklyMinutes > 0) {
-      final productiveMinutes = (totalWeeklyMinutes - distractionMinutes).clamp(0, totalWeeklyMinutes);
-      productivePercent = ((productiveMinutes / totalWeeklyMinutes) * 100).round();
+      final productiveMinutes = (totalWeeklyMinutes - distractionMinutes).clamp(
+        0,
+        totalWeeklyMinutes,
+      );
+      productivePercent = ((productiveMinutes / totalWeeklyMinutes) * 100)
+          .round();
     } else {
-      productivePercent = totalWeeklySeconds == 0 && distractionMinutes > 0 ? 0 : 100;
+      productivePercent = totalWeeklySeconds == 0 && distractionMinutes > 0
+          ? 0
+          : 100;
     }
 
     return Scaffold(
@@ -287,11 +358,15 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
-                              if (value.toInt() >= chartData.length) return const SizedBox.shrink();
-                              return Text(chartData[value.toInt()]['day'],
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textSecondary));
+                              if (value.toInt() >= chartData.length)
+                                return const SizedBox.shrink();
+                              return Text(
+                                chartData[value.toInt()]['day'],
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.textSecondary,
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -302,15 +377,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                             getTitlesWidget: (value, meta) => Text(
                               '${value.toInt()}',
                               style: const TextStyle(
-                                  fontSize: 10,
-                                  color: AppColors.textSecondary),
+                                fontSize: 10,
+                                color: AppColors.textSecondary,
+                              ),
                             ),
                           ),
                         ),
                         topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                         rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                       ),
                       borderData: FlBorderData(show: false),
                       minX: 0,
@@ -320,7 +398,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                       lineBarsData: [
                         LineChartBarData(
                           spots: chartData.asMap().entries.map((entry) {
-                            final score = (entry.value['score'] as num?)?.toDouble() ?? 0.0;
+                            final score =
+                                (entry.value['score'] as num?)?.toDouble() ??
+                                0.0;
                             return FlSpot(entry.key.toDouble(), score);
                           }).toList(),
                           isCurved: true,
@@ -331,11 +411,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                             show: true,
                             getDotPainter: (spot, percent, bar, index) =>
                                 FlDotCirclePainter(
-                              radius: 4,
-                              color: AppColors.primary,
-                              strokeWidth: 2,
-                              strokeColor: Colors.white,
-                            ),
+                                  radius: 4,
+                                  color: AppColors.primary,
+                                  strokeWidth: 2,
+                                  strokeColor: Colors.white,
+                                ),
                           ),
                           belowBarData: BarAreaData(
                             show: true,
@@ -368,58 +448,61 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.divider),
-                  ),
-                  child: Column(
-                    children: [
-                      const SectionHeader(title: 'Today\'s Screen Time Breakdown'),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        height: 200,
-                        child: PieChart(
-                          PieChartData(
-                            sectionsSpace: 2,
-                            centerSpaceRadius: 50,
-                            pieTouchData: PieTouchData(
-                              touchCallback: (event, response) {
-                                setState(() {
-                                  _touchedIndex = response?.touchedSection
-                                          ?.touchedSectionIndex ??
-                                      -1;
-                                });
-                              },
-                            ),
-                            sections: todayAppUsageList
-                                .asMap()
-                                .entries
-                                .map((entry) {
-                              final isTouched =
-                                  entry.key == _touchedIndex;
-                              return PieChartSectionData(
-                                  value: (entry.value['minutes'] as int).toDouble(),
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.divider),
+                    ),
+                    child: Column(
+                      children: [
+                        const SectionHeader(
+                          title: 'Today\'s Screen Time Breakdown',
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 200,
+                          child: PieChart(
+                            PieChartData(
+                              sectionsSpace: 2,
+                              centerSpaceRadius: 50,
+                              pieTouchData: PieTouchData(
+                                touchCallback: (event, response) {
+                                  setState(() {
+                                    _touchedIndex =
+                                        response
+                                            ?.touchedSection
+                                            ?.touchedSectionIndex ??
+                                        -1;
+                                  });
+                                },
+                              ),
+                              sections: todayAppUsageList.asMap().entries.map((
+                                entry,
+                              ) {
+                                final isTouched = entry.key == _touchedIndex;
+                                return PieChartSectionData(
+                                  value: (entry.value['minutes'] as int)
+                                      .toDouble(),
                                   title: isTouched
                                       ? entry.value['name'] as String
                                       : '',
                                   radius: isTouched ? 70 : 60,
                                   color: entry.value['productive'] as bool
-                                    ? AppColors.chartColors[
-                                        entry.key % 3]
-                                    : AppColors.chartColors[3 +
-                                        entry.key % 3],
-                                titleStyle: const TextStyle(
+                                      ? AppColors.chartColors[entry.key % 3]
+                                      : AppColors.chartColors[3 +
+                                            entry.key % 3],
+                                  titleStyle: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              );
-                            }).toList(),
+                                    color: Colors.white,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
                 const SizedBox(height: 24),
 
@@ -430,8 +513,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                   const Padding(
                     padding: EdgeInsets.all(20),
                     child: Center(
-                      child: Text('No app usage recorded today', 
-                          style: TextStyle(color: AppColors.textSecondary)),
+                      child: Text(
+                        'No app usage recorded today',
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
                     ),
                   ),
 
@@ -452,8 +537,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                         color: app['productive'] as bool
                             ? AppColors.primary
                             : AppColors.error,
-                        onTap: () => _showAppLimitDialog(context, app['name'] as String, app['packageName'] as String),
-
+                        onTap: () => _showAppLimitDialog(
+                          context,
+                          app['name'] as String,
+                          app['packageName'] as String,
+                        ),
                       ),
                     ),
                   );
@@ -474,45 +562,52 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                     color: AppColors.accentLight,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                        color: AppColors.accent.withOpacity(0.3)),
+                      color: AppColors.accent.withOpacity(0.3),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.auto_awesome,
-                              color: AppColors.accent, size: 20),
+                          const Icon(
+                            Icons.auto_awesome,
+                            color: AppColors.accent,
+                            size: 20,
+                          ),
                           const SizedBox(width: 8),
-                          Text('AI Trend Analysis',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                      color: const Color(0xFF065F46))),
+                          Text(
+                            'AI Trend Analysis',
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: const Color(0xFF065F46)),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 12),
                       _TrendItem(
-                          icon: Icons.trending_up,
-                          color: AppColors.accent,
-                          text:
-                              'Your focus sessions have increased by 23% this week'),
+                        icon: Icons.trending_up,
+                        color: AppColors.accent,
+                        text:
+                            'Your focus sessions have increased by 23% this week',
+                      ),
                       _TrendItem(
-                          icon: Icons.warning_amber_outlined,
-                          color: AppColors.warning,
-                          text:
-                              'Social media usage peaks between 1–3 PM, affecting afternoon productivity'),
+                        icon: Icons.warning_amber_outlined,
+                        color: AppColors.warning,
+                        text:
+                            'Social media usage peaks between 1–3 PM, affecting afternoon productivity',
+                      ),
                       _TrendItem(
-                          icon: Icons.star_outline,
-                          color: AppColors.primary,
-                          text:
-                              'You perform best on Thursdays — schedule critical tasks accordingly'),
+                        icon: Icons.star_outline,
+                        color: AppColors.primary,
+                        text:
+                            'You perform best on Thursdays — schedule critical tasks accordingly',
+                      ),
                       _TrendItem(
-                          icon: Icons.nightlight_outlined,
-                          color: AppColors.info,
-                          text:
-                              'Reducing screen time after 9 PM could improve your morning focus by 30%'),
+                        icon: Icons.nightlight_outlined,
+                        color: AppColors.info,
+                        text:
+                            'Reducing screen time after 9 PM could improve your morning focus by 30%',
+                      ),
                     ],
                   ),
                 ),
@@ -538,12 +633,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                       lineBarsData: [
                         LineChartBarData(
                           spots: const [
-                            FlSpot(0, 50), FlSpot(1, 55),
-                            FlSpot(2, 60), FlSpot(3, 58),
-                            FlSpot(4, 70), FlSpot(5, 75),
-                            FlSpot(6, 72), FlSpot(7, 80),
-                            FlSpot(8, 85), FlSpot(9, 82),
-                            FlSpot(10, 88), FlSpot(11, 92),
+                            FlSpot(0, 50),
+                            FlSpot(1, 55),
+                            FlSpot(2, 60),
+                            FlSpot(3, 58),
+                            FlSpot(4, 70),
+                            FlSpot(5, 75),
+                            FlSpot(6, 72),
+                            FlSpot(7, 80),
+                            FlSpot(8, 85),
+                            FlSpot(9, 82),
+                            FlSpot(10, 88),
+                            FlSpot(11, 92),
                           ],
                           isCurved: true,
                           color: AppColors.primary,
@@ -580,8 +681,11 @@ class _TrendItem extends StatelessWidget {
   final Color color;
   final String text;
 
-  const _TrendItem(
-      {required this.icon, required this.color, required this.text});
+  const _TrendItem({
+    required this.icon,
+    required this.color,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -593,9 +697,13 @@ class _TrendItem extends StatelessWidget {
           Icon(icon, color: color, size: 18),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(text,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFF065F46), height: 1.4)),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFF065F46),
+                height: 1.4,
+              ),
+            ),
           ),
         ],
       ),

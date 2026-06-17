@@ -38,7 +38,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           content: const Text('Please accept the Terms & Privacy Policy'),
           backgroundColor: AppColors.warning,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       );
       return;
@@ -57,7 +59,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           content: Text(auth.errorMessage ?? 'Registration failed'),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       );
     }
@@ -96,8 +100,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_new,
-                            color: Colors.white, size: 20),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
@@ -106,11 +113,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Image.asset(
                         'assets/images/logo.png',
                         height: 60,
-                        errorBuilder: (context, error, stackTrace) => const Icon(
-                          Icons.psychology_outlined,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(
+                              Icons.psychology_outlined,
+                              color: Colors.white,
+                              size: 50,
+                            ),
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -118,7 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       delay: const Duration(milliseconds: 200),
                       child: Text(
                         'Create Account',
-                        style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge
+                            ?.copyWith(
                               color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -133,7 +142,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           'Start your AI-powered productivity journey today',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
                                 color: Colors.white.withOpacity(0.9),
                                 fontSize: 14,
                               ),
@@ -175,7 +185,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Text(
                             'Sign Up',
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.textPrimary,
                                 ),
@@ -188,7 +199,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             prefixIcon: Icons.person_outline,
                             controller: _nameController,
                             validator: (v) {
-                              if (v == null || v.trim().isEmpty) return 'Name is required';
+                              if (v == null || v.trim().isEmpty)
+                                return 'Name is required';
                               return null;
                             },
                           ),
@@ -201,8 +213,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Email is required';
-                              if (!v.contains('@')) return 'Enter a valid email';
+                              if (v == null || v.isEmpty)
+                                return 'Email is required';
+                              if (!v.contains('@'))
+                                return 'Enter a valid email';
                               return null;
                             },
                           ),
@@ -217,10 +231,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 : Icons.visibility_off_outlined,
                             obscureText: _obscurePassword,
                             controller: _passwordController,
-                            onSuffixTap: () =>
-                                setState(() => _obscurePassword = !_obscurePassword),
+                            onSuffixTap: () => setState(
+                              () => _obscurePassword = !_obscurePassword,
+                            ),
                             validator: (v) {
-                              if (v == null || v.isEmpty) return 'Password is required';
+                              if (v == null || v.isEmpty)
+                                return 'Password is required';
                               if (v.length < 6) return 'Minimum 6 characters';
                               return null;
                             },
@@ -235,11 +251,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 width: 24,
                                 child: Checkbox(
                                   value: _agreedToTerms,
-                                  onChanged: (v) =>
-                                      setState(() => _agreedToTerms = v ?? false),
+                                  onChanged: (v) => setState(
+                                    () => _agreedToTerms = v ?? false,
+                                  ),
                                   activeColor: AppColors.primary,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4)),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -261,7 +279,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     height: 24,
                                     width: 24,
                                     child: CircularProgressIndicator(
-                                        color: Colors.white, strokeWidth: 3))
+                                      color: Colors.white,
+                                      strokeWidth: 3,
+                                    ),
+                                  )
                                 : const Text('Create Account'),
                           ),
 

@@ -46,8 +46,9 @@ class _FocusModeScreenState extends State<FocusModeScreen>
     setState(() => _isRunning = true);
     final user = context.read<AuthProvider>().userModel;
     if (user != null) {
-      final updatedUser =
-          await context.read<ProductivityProvider>().startFocusMode(user.uid);
+      final updatedUser = await context
+          .read<ProductivityProvider>()
+          .startFocusMode(user.uid);
       if (updatedUser != null && mounted) {
         context.read<AuthProvider>().updateUserModel(updatedUser);
       }
@@ -101,7 +102,9 @@ class _FocusModeScreenState extends State<FocusModeScreen>
             user,
             durationSeconds: actualDuration,
             focusScore: _focusScore,
-            appUsage: remainingMins > 0 ? {'Early Exit': remainingMins} : const {},
+            appUsage: remainingMins > 0
+                ? {'Early Exit': remainingMins}
+                : const {},
           );
 
       // Update the auth provider with refreshed user data (streak, score, etc.)
@@ -140,19 +143,25 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                 color: AppColors.accentLight,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check_circle_outline,
-                  color: AppColors.accent, size: 48),
+              child: const Icon(
+                Icons.check_circle_outline,
+                color: AppColors.accent,
+                size: 48,
+              ),
             ),
             const SizedBox(height: 16),
-            const Text('Session Complete! 🎉',
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w700)),
+            const Text(
+              'Session Complete! 🎉',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
             const SizedBox(height: 8),
             Text(
               'You completed a $_selectedMinutes-minute focus session. Great work!',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  color: AppColors.textSecondary, fontSize: 14),
+                color: AppColors.textSecondary,
+                fontSize: 14,
+              ),
             ),
             const SizedBox(height: 8),
             Container(
@@ -164,9 +173,10 @@ class _FocusModeScreenState extends State<FocusModeScreen>
               child: Text(
                 '+$_focusScore Focus Points Earned',
                 style: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15),
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
               ),
             ),
           ],
@@ -216,17 +226,21 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                 context: context,
                 builder: (_) => AlertDialog(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   title: const Text('End Session?'),
                   content: const Text(
-                      'Your current session will be saved with partial credit.'),
+                    'Your current session will be saved with partial credit.',
+                  ),
                   actions: [
                     TextButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel')),
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('Cancel'),
+                    ),
                     ElevatedButton(
-                        onPressed: () => Navigator.pop(context, true),
-                        child: const Text('End Session')),
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('End Session'),
+                    ),
                   ],
                 ),
               );
@@ -261,16 +275,17 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                       duration: const Duration(milliseconds: 200),
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
-                        color: selected
-                            ? AppColors.primary
-                            : AppColors.surface,
+                        color: selected ? AppColors.primary : AppColors.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                            color: selected
-                                ? AppColors.primary
-                                : AppColors.divider),
+                          color: selected
+                              ? AppColors.primary
+                              : AppColors.divider,
+                        ),
                       ),
                       child: Text(
                         '${mins}m',
@@ -312,9 +327,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                             strokeWidth: 12,
                             backgroundColor: AppColors.divider,
                             valueColor: AlwaysStoppedAnimation(
-                              _isRunning
-                                  ? AppColors.primary
-                                  : AppColors.accent,
+                              _isRunning ? AppColors.primary : AppColors.accent,
                             ),
                             strokeCap: StrokeCap.round,
                           ),
@@ -327,9 +340,7 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                               style: const TextStyle(
                                 fontSize: 52,
                                 fontWeight: FontWeight.w700,
-                                fontFeatures: [
-                                  FontFeature.tabularFigures()
-                                ],
+                                fontFeatures: [FontFeature.tabularFigures()],
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -337,8 +348,8 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                               _isRunning
                                   ? 'Stay focused 💪'
                                   : _isPaused
-                                      ? 'Paused'
-                                      : 'Ready to focus?',
+                                  ? 'Paused'
+                                  : 'Ready to focus?',
                               style: const TextStyle(
                                 color: AppColors.textSecondary,
                                 fontSize: 14,
@@ -425,8 +436,9 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                       backgroundColor: AppColors.accentLight,
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(14),
-                      side:
-                          BorderSide(color: AppColors.accent.withOpacity(0.3)),
+                      side: BorderSide(
+                        color: AppColors.accent.withOpacity(0.3),
+                      ),
                     ),
                   ),
               ],
@@ -444,16 +456,19 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.tips_and_updates_outlined,
-                        color: AppColors.primary, size: 20),
+                    const Icon(
+                      Icons.tips_and_updates_outlined,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         'Put your phone down, close distracting tabs, and take a deep breath before starting.',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.primaryDark,
-                              fontSize: 13,
-                            ),
+                          color: AppColors.primaryDark,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ],

@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '410598082535',
     projectId: 'product-analytics-c7821',
     storageBucket: 'product-analytics-c7821.firebasestorage.app',
-    iosClientId: '410598082535-3ro9se8b0jliic0tnl7vsjqa6t6o5isg.apps.googleusercontent.com',
+    iosClientId:
+        '410598082535-3ro9se8b0jliic0tnl7vsjqa6t6o5isg.apps.googleusercontent.com',
     iosBundleId: 'com.example.productanalytics',
   );
 
@@ -73,7 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '410598082535',
     projectId: 'product-analytics-c7821',
     storageBucket: 'product-analytics-c7821.firebasestorage.app',
-    iosClientId: '410598082535-3ro9se8b0jliic0tnl7vsjqa6t6o5isg.apps.googleusercontent.com',
+    iosClientId:
+        '410598082535-3ro9se8b0jliic0tnl7vsjqa6t6o5isg.apps.googleusercontent.com',
     iosBundleId: 'com.example.productanalytics',
   );
 
