@@ -1,0 +1,66 @@
+name: E2E Tests & QA Report
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          pip install openpyxl selenium webdriver-manager
+
+      - name: Build Flutter Web (HTML renderer)
+        run: flutter build web --web-renderer html
+
+      - name: Run Web Server and E2E tests
+        run: |
+          # Start python simple HTTP server in background
+          python -m http.server 8080 --directory build/web &
+          
+          # Wait for server to start up
+          echo "Waiting for Flutter Web server to start on port 8080..."
+          for i in {1..30}; do
+            if curl -s -o /dev/null -I -w "%{http_code}" http://localhost:8080 | grep -q "200"; then
+              echo "Server is up and running!"
+              break
+            fi
+            echo "Retrying in 2 seconds ($i/30)..."
+            sleep 2
+          done
+          
+          # Run Python E2E tests
+          python test/e2e/selenium_e2e.py
+
+      - name: Upload QA Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E2E-QA-Test-Report
+          path: E2E_Test_Report_ProductivityAI_*.xlsx
