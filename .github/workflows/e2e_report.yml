@@ -37,7 +37,7 @@ jobs:
           pip install openpyxl selenium webdriver-manager
 
       - name: Build Flutter Web (HTML renderer)
-        run: flutter build web --web-renderer html
+        run: flutter build web
 
       - name: Run Web Server and E2E tests
         run: |
