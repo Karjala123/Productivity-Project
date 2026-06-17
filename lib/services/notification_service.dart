@@ -32,7 +32,7 @@ class NotificationService {
       iOS: iosSettings,
     );
 
-    await _notifications.initialize(settings: settings);
+    await _notifications.initialize(settings);
     _initialized = true;
   }
 
@@ -41,7 +41,7 @@ class NotificationService {
     if (kIsWeb) return;
 
     // Cancel existing streak reminders first
-    await _notifications.cancel(id: 1001);
+    await _notifications.cancel(1001);
 
     const androidDetails = AndroidNotificationDetails(
       'streak_channel',
@@ -61,11 +61,11 @@ class NotificationService {
 
     // Show the notification immediately as a reminder, then re-schedule daily
     await _notifications.periodicallyShow(
-      id: 1001,
-      title: '🔥 Keep your streak alive!',
-      body: 'Don\'t forget to log in and complete a focus session today to maintain your streak!',
-      repeatInterval: RepeatInterval.daily,
-      notificationDetails: details,
+      1001,
+      '🔥 Keep your streak alive!',
+      'Don\'t forget to log in and complete a focus session today to maintain your streak!',
+      RepeatInterval.daily,
+      details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
@@ -74,7 +74,7 @@ class NotificationService {
   Future<void> scheduleDailyLoginReminder() async {
     if (kIsWeb) return;
 
-    await _notifications.cancel(id: 1002);
+    await _notifications.cancel(1002);
 
     const androidDetails = AndroidNotificationDetails(
       'login_channel',
@@ -93,11 +93,11 @@ class NotificationService {
     );
 
     await _notifications.periodicallyShow(
-      id: 1002,
-      title: '📊 Track your productivity!',
-      body: 'Open ProductivityAI to log your focus sessions and keep improving!',
-      repeatInterval: RepeatInterval.daily,
-      notificationDetails: details,
+      1002,
+      '📊 Track your productivity!',
+      'Open ProductivityAI to log your focus sessions and keep improving!',
+      RepeatInterval.daily,
+      details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
@@ -123,10 +123,10 @@ class NotificationService {
     );
 
     await _notifications.show(
-      id: 2001,
-      title: '⚠️ Streak at risk!',
-      body: 'Your $currentStreak-day streak will reset if you don\'t complete a session today!',
-      notificationDetails: details,
+      2001,
+      '⚠️ Streak at risk!',
+      'Your $currentStreak-day streak will reset if you don\'t complete a session today!',
+      details,
     );
   }
 
