@@ -49,6 +49,8 @@ jobs:
         run: flutter build web
 
       - name: Run Web Server and E2E tests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Start python simple HTTP server in background
           python -m http.server 8080 --directory build/web &
