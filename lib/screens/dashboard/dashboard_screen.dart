@@ -32,8 +32,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
-    final ProductivityProvider productivity = context
-        .watch<ProductivityProvider>();
+    final ProductivityProvider productivity =
+        context.watch<ProductivityProvider>();
     final user = auth.userModel;
 
     if (user == null) return const SizedBox.shrink();
@@ -61,7 +61,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               Text(
                                 greeting,
-                                style: Theme.of(context).textTheme.bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
                                     ?.copyWith(color: AppColors.textSecondary),
                               ),
                               Text(
@@ -407,7 +409,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Text(
                             'No sessions today yet.',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
                                 ?.copyWith(color: AppColors.textHint),
                           ),
                         ],
@@ -483,8 +487,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Text(
-                    chartData[value
-                        .toInt()]['day'], // Show full 3-letter day (Mon, Tue...)
+                    chartData[value.toInt()]
+                        ['day'], // Show full 3-letter day (Mon, Tue...)
                     style: const TextStyle(
                       fontSize: 10,
                       color: AppColors.textSecondary,
@@ -587,16 +591,16 @@ class _SessionTile extends StatelessWidget {
                 Text(
                   'Started at ${DateFormat('h:mm a').format(session.startTime)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
-                    fontSize: 11,
-                  ),
+                        color: AppColors.textSecondary,
+                        fontSize: 11,
+                      ),
                 ),
                 Text(
                   '${_formatSeconds(session.durationSeconds)} • Score: ${session.focusScore}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13,
-                  ),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),
                 ),
               ],
             ),

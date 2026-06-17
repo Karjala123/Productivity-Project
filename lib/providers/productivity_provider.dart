@@ -194,8 +194,7 @@ class ProductivityProvider extends ChangeNotifier {
         'date': dayKey,
         'seconds': seconds,
         'score': score,
-        'isToday':
-            date.year == now.year &&
+        'isToday': date.year == now.year &&
             date.month == now.month &&
             date.day == now.day,
       });

@@ -78,10 +78,8 @@ class BackgroundBlockerService {
           // IMPORTANT: Only block if the app was recently in the foreground (within last 10 seconds)
           // This prevents blocking the phone while using other apps.
           final lastForeground = info.lastForeground;
-          final timeSinceForeground = now
-              .difference(lastForeground)
-              .inSeconds
-              .abs();
+          final timeSinceForeground =
+              now.difference(lastForeground).inSeconds.abs();
 
           if (timeSinceForeground < 15) {
             // Check if we already showed the overlay recently

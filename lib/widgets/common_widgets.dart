@@ -53,17 +53,17 @@ class StatCard extends StatelessWidget {
             Text(
               value,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-              ),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ),
             ),
             const SizedBox(height: 2),
             Text(
               label,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppColors.textSecondary,
-                fontSize: 12,
-              ),
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                  ),
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 2),
@@ -72,10 +72,10 @@ class StatCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.success,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                ),
+                      color: AppColors.success,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
               ),
             ],
           ],
@@ -132,9 +132,9 @@ class ScoreRing extends StatelessWidget {
               Text(
                 '$score',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: _scoreColor,
-                ),
+                      fontWeight: FontWeight.w700,
+                      color: _scoreColor,
+                    ),
               ),
               Text(
                 'Score',
@@ -225,9 +225,9 @@ class AppTextField extends StatelessWidget {
           Text(
             label!,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
-            ),
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                ),
           ),
           const SizedBox(height: 8),
         ],
@@ -370,8 +370,8 @@ class AppUsageBar extends StatelessWidget {
                 Text(
                   timeStr,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                        color: AppColors.textSecondary,
+                      ),
                 ),
               ],
             ),

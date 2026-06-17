@@ -20,7 +20,8 @@ class NotificationService {
       return;
     }
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -46,7 +47,8 @@ class NotificationService {
     const androidDetails = AndroidNotificationDetails(
       'streak_channel',
       'Streak Reminders',
-      channelDescription: 'Daily reminders to maintain your productivity streak',
+      channelDescription:
+          'Daily reminders to maintain your productivity streak',
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -63,7 +65,8 @@ class NotificationService {
     await _notifications.periodicallyShow(
       id: 1001,
       title: '🔥 Keep your streak alive!',
-      body: "Don't forget to log in and complete a focus session today to maintain your streak!",
+      body:
+          "Don't forget to log in and complete a focus session today to maintain your streak!",
       repeatInterval: RepeatInterval.daily,
       notificationDetails: details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -95,7 +98,8 @@ class NotificationService {
     await _notifications.periodicallyShow(
       id: 1002,
       title: '📊 Track your productivity!',
-      body: 'Open ProductivityAI to log your focus sessions and keep improving!',
+      body:
+          'Open ProductivityAI to log your focus sessions and keep improving!',
       repeatInterval: RepeatInterval.daily,
       notificationDetails: details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -125,7 +129,8 @@ class NotificationService {
     await _notifications.show(
       id: 2001,
       title: '⚠️ Streak at risk!',
-      body: "Your $currentStreak-day streak will reset if you don't complete a session today!",
+      body:
+          "Your $currentStreak-day streak will reset if you don't complete a session today!",
       notificationDetails: details,
     );
   }

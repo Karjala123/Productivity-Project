@@ -34,9 +34,8 @@ class ProductivityService {
         .where('userId', isEqualTo: userId)
         .get();
 
-    final sessions = query.docs
-        .map((d) => ProductivitySession.fromFirestore(d))
-        .toList();
+    final sessions =
+        query.docs.map((d) => ProductivitySession.fromFirestore(d)).toList();
 
     // Sort client-side to avoid requiring composite indices in Firestore
     sessions.sort((a, b) => b.startTime.compareTo(a.startTime));
@@ -145,7 +144,7 @@ class ProductivityService {
     if (sessions.isEmpty) return 0;
     final avgScore =
         sessions.map((s) => s.focusScore).reduce((a, b) => a + b) ~/
-        sessions.length;
+            sessions.length;
     return avgScore.clamp(0, 100);
   }
 

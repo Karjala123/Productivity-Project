@@ -69,7 +69,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
     final avgScore = filteredSessions.isEmpty
         ? 0
         : filteredSessions.map((s) => s.focusScore).reduce((a, b) => a + b) ~/
-              filteredSessions.length;
+            filteredSessions.length;
 
     final sessionCount = _selectedRange == 'All Time'
         ? (user?.totalSessions ?? 0)
@@ -117,17 +117,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         color: selected ? AppColors.primary : AppColors.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: selected
-                              ? AppColors.primary
-                              : AppColors.divider,
+                          color:
+                              selected ? AppColors.primary : AppColors.divider,
                         ),
                       ),
                       child: Text(
                         range,
                         style: TextStyle(
-                          color: selected
-                              ? Colors.white
-                              : AppColors.textSecondary,
+                          color:
+                              selected ? Colors.white : AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
                           fontSize: 13,
                         ),
@@ -228,8 +226,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 final scoreColor = session.focusScore >= 80
                     ? AppColors.success
                     : session.focusScore >= 60
-                    ? AppColors.warning
-                    : AppColors.error;
+                        ? AppColors.warning
+                        : AppColors.error;
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
@@ -263,7 +261,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               session.sessionType == 'focus'
                                   ? 'Focus Session'
                                   : 'Deep Work',
-                              style: Theme.of(context).textTheme.bodyMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
                                   ?.copyWith(fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: 2),
@@ -281,7 +281,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         children: [
                           Text(
                             _formatSeconds(session.durationSeconds),
-                            style: Theme.of(context).textTheme.bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 2),
@@ -323,7 +325,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       const SizedBox(width: 8),
                       Text(
                         'AI Insights',
-                        style: Theme.of(context).textTheme.titleMedium
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
                             ?.copyWith(color: const Color(0xFF065F46)),
                       ),
                     ],
@@ -333,12 +337,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     filteredSessions.isEmpty
                         ? 'Complete focus sessions to get personalized AI insights about your productivity patterns.'
                         : 'You\'re most productive in your selected period. '
-                              'Your average focus session lasts ${filteredSessions.isEmpty ? 0 : totalSeconds ~/ (filteredSessions.length * 60)} minutes. '
-                              'Consider scheduling deep work tasks during peak hours for maximum effectiveness.',
+                            'Your average focus session lasts ${filteredSessions.isEmpty ? 0 : totalSeconds ~/ (filteredSessions.length * 60)} minutes. '
+                            'Consider scheduling deep work tasks during peak hours for maximum effectiveness.',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF065F46),
-                      height: 1.6,
-                    ),
+                          color: const Color(0xFF065F46),
+                          height: 1.6,
+                        ),
                   ),
                 ],
               ),

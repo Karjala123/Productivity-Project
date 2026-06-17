@@ -143,9 +143,9 @@ class _AiChatbotScreenState extends State<AiChatbotScreen> {
                 Text(
                   'Powered by Claude AI',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 11,
-                    color: AppColors.accent,
-                  ),
+                        fontSize: 11,
+                        color: AppColors.accent,
+                      ),
                 ),
               ],
             ),
@@ -287,9 +287,8 @@ class _MessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
-        mainAxisAlignment: isUser
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
+        mainAxisAlignment:
+            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isUser) ...[

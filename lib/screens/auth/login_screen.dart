@@ -104,10 +104,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 80,
                         errorBuilder: (context, error, stackTrace) =>
                             const Icon(
-                              Icons.psychology_outlined,
-                              color: Colors.white,
-                              size: 60,
-                            ),
+                          Icons.psychology_outlined,
+                          color: Colors.white,
+                          size: 60,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -115,12 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       delay: const Duration(milliseconds: 200),
                       child: Text(
                         'Welcome Back!',
-                        style: Theme.of(context).textTheme.displayLarge
-                            ?.copyWith(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayLarge?.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -130,9 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Sign in to continue your productivity journey',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 16,
-                        ),
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 16,
+                            ),
                       ),
                     ),
                   ],
@@ -170,14 +170,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             'Login',
-                            style: Theme.of(context).textTheme.headlineMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.textPrimary,
                                 ),
                           ),
                           const SizedBox(height: 32),
-
                           AppTextField(
                             label: 'Email Address',
                             hint: 'your@email.com',
@@ -193,7 +194,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           const SizedBox(height: 24),
-
                           AppTextField(
                             label: 'Password',
                             hint: '••••••••',
@@ -213,7 +213,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                           ),
-
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
@@ -229,7 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 20),
-
                           ElevatedButton(
                             onPressed: isLoading ? null : _login,
                             child: isLoading
@@ -244,7 +242,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : const Text('Sign In'),
                           ),
                           const SizedBox(height: 24),
-
                           OutlinedButton(
                             onPressed: isLoading ? null : _googleSignIn,
                             child: Row(
@@ -255,10 +252,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: 20,
                                   errorBuilder: (context, error, stackTrace) =>
                                       const Icon(
-                                        Icons.g_mobiledata,
-                                        color: AppColors.primary,
-                                        size: 24,
-                                      ),
+                                    Icons.g_mobiledata,
+                                    color: AppColors.primary,
+                                    size: 24,
+                                  ),
                                 ),
                                 const SizedBox(width: 12),
                                 const Flexible(
@@ -274,9 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 32),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

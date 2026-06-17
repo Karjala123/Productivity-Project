@@ -27,8 +27,7 @@ class AiService {
         data: {
           'userId': user.uid,
           'context': context,
-          'prompt':
-              '''
+          'prompt': '''
 Analyze this user's productivity data and generate 5 personalized suggestions.
 Return a JSON array with objects containing: title, description, category (focus/break/app_usage/schedule), priority (high/medium/low).
 
@@ -84,8 +83,7 @@ $context
         data: {
           'message': message,
           'history': conversationHistory,
-          'systemContext':
-              '''
+          'systemContext': '''
 You are an AI productivity coach for ${user.name}. 
 Help them improve their focus, manage digital wellness, and optimize their work habits.
 Current productivity score: ${user.productivityScore}/100.
@@ -232,15 +230,13 @@ Average Session Duration: ${sessions.isEmpty ? 0 : sessions.map((s) => s.duratio
 
     if (focusMinutes > 120)
       score += 20;
-    else if (focusMinutes > 60)
-      score += 10;
+    else if (focusMinutes > 60) score += 10;
 
     if (breaksTaken >= 2 && breaksTaken <= 5) score += 15;
 
     if (distractions < 3)
       score += 15;
-    else if (distractions > 10)
-      score -= 10;
+    else if (distractions > 10) score -= 10;
 
     return score.clamp(0, 100);
   }

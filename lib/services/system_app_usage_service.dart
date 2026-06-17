@@ -124,8 +124,7 @@ class SystemAppUsageService {
     if (lower.contains('maps')) return 'Maps';
     if (lower.contains('twitter') ||
         lower == 'com.twitter.android' ||
-        lower == 'com.x.x')
-      return 'X (Twitter)';
+        lower == 'com.x.x') return 'X (Twitter)';
     if (lower.contains('linkedin')) return 'LinkedIn';
 
     // Fallback: capitalize the default token parsed by the package

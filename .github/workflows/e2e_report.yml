@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  e2e-tests:
+  ci-and-qa:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,16 @@ jobs:
           flutter pub get
           pip install openpyxl selenium webdriver-manager
 
-      - name: Build Flutter Web (HTML renderer)
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze code
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run unit/widget tests
+        run: flutter test
+
+      - name: Build Flutter Web
         run: flutter build web
 
       - name: Run Web Server and E2E tests

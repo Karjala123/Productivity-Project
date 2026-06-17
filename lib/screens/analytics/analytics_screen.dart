@@ -69,8 +69,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                   Text(
                     "Set Limit for $appName",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -153,27 +153,26 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
     final chartData = productivity.getThisWeekChartData();
     final appUsage =
         productivity.weeklyData['appUsageTotals'] as Map<String, dynamic>? ??
-        {};
+            {};
 
-    final appUsageList =
-        appUsage.entries
-            .map(
-              (e) => {
-                'name': e.key,
-                'minutes': e.value is int ? e.value : (e.value as num).toInt(),
-                'productive': ![
-                  'YouTube',
-                  'Instagram',
-                  'TikTok',
-                  'Facebook',
-                  'Early Exit',
-                ].contains(e.key),
-              },
-            )
-            .toList()
-          ..sort(
-            (a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int),
-          );
+    final appUsageList = appUsage.entries
+        .map(
+          (e) => {
+            'name': e.key,
+            'minutes': e.value is int ? e.value : (e.value as num).toInt(),
+            'productive': ![
+              'YouTube',
+              'Instagram',
+              'TikTok',
+              'Facebook',
+              'Early Exit',
+            ].contains(e.key),
+          },
+        )
+        .toList()
+      ..sort(
+        (a, b) => (b['minutes'] as int).compareTo(a['minutes'] as int),
+      );
 
     // Calculate Today's App Usage
     final Map<String, Map<String, dynamic>> todayAppUsageData = {};
@@ -254,12 +253,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
         0,
         totalWeeklyMinutes,
       );
-      productivePercent = ((productiveMinutes / totalWeeklyMinutes) * 100)
-          .round();
+      productivePercent =
+          ((productiveMinutes / totalWeeklyMinutes) * 100).round();
     } else {
-      productivePercent = totalWeeklySeconds == 0 && distractionMinutes > 0
-          ? 0
-          : 100;
+      productivePercent =
+          totalWeeklySeconds == 0 && distractionMinutes > 0 ? 0 : 100;
     }
 
     return Scaffold(
@@ -400,7 +398,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                           spots: chartData.asMap().entries.map((entry) {
                             final score =
                                 (entry.value['score'] as num?)?.toDouble() ??
-                                0.0;
+                                    0.0;
                             return FlSpot(entry.key.toDouble(), score);
                           }).toList(),
                           isCurved: true,
@@ -411,11 +409,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                             show: true,
                             getDotPainter: (spot, percent, bar, index) =>
                                 FlDotCirclePainter(
-                                  radius: 4,
-                                  color: AppColors.primary,
-                                  strokeWidth: 2,
-                                  strokeColor: Colors.white,
-                                ),
+                              radius: 4,
+                              color: AppColors.primary,
+                              strokeWidth: 2,
+                              strokeColor: Colors.white,
+                            ),
                           ),
                           belowBarData: BarAreaData(
                             show: true,
@@ -467,9 +465,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                               pieTouchData: PieTouchData(
                                 touchCallback: (event, response) {
                                   setState(() {
-                                    _touchedIndex =
-                                        response
-                                            ?.touchedSection
+                                    _touchedIndex = response?.touchedSection
                                             ?.touchedSectionIndex ??
                                         -1;
                                   });
@@ -488,8 +484,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                                   radius: isTouched ? 70 : 60,
                                   color: entry.value['productive'] as bool
                                       ? AppColors.chartColors[entry.key % 3]
-                                      : AppColors.chartColors[3 +
-                                            entry.key % 3],
+                                      : AppColors
+                                          .chartColors[3 + entry.key % 3],
                                   titleStyle: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
@@ -578,7 +574,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen>
                           const SizedBox(width: 8),
                           Text(
                             'AI Trend Analysis',
-                            style: Theme.of(context).textTheme.titleMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
                                 ?.copyWith(color: const Color(0xFF065F46)),
                           ),
                         ],
@@ -700,9 +698,9 @@ class _TrendItem extends StatelessWidget {
             child: Text(
               text,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFF065F46),
-                height: 1.4,
-              ),
+                    color: const Color(0xFF065F46),
+                    height: 1.4,
+                  ),
             ),
           ),
         ],

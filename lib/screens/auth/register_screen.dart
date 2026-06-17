@@ -115,10 +115,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 60,
                         errorBuilder: (context, error, stackTrace) =>
                             const Icon(
-                              Icons.psychology_outlined,
-                              color: Colors.white,
-                              size: 50,
-                            ),
+                          Icons.psychology_outlined,
+                          color: Colors.white,
+                          size: 50,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -126,12 +126,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       delay: const Duration(milliseconds: 200),
                       child: Text(
                         'Create Account',
-                        style: Theme.of(context).textTheme.displayLarge
-                            ?.copyWith(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayLarge?.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -142,11 +142,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           'Start your AI-powered productivity journey today',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: Colors.white.withOpacity(0.9),
-                                fontSize: 14,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontSize: 14,
+                                  ),
                         ),
                       ),
                     ),
@@ -185,7 +185,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Text(
                             'Sign Up',
-                            style: Theme.of(context).textTheme.headlineMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.textPrimary,

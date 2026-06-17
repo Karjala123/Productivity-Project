@@ -403,11 +403,7 @@ class _BottomNavBar extends StatelessWidget {
           child: Row(
             children: [
               // First 2 nav items
-              ...items
-                  .sublist(0, 2)
-                  .asMap()
-                  .entries
-                  .map(
+              ...items.sublist(0, 2).asMap().entries.map(
                     (entry) => Expanded(
                       child: _NavBarItem(
                         item: entry.value,
@@ -419,11 +415,7 @@ class _BottomNavBar extends StatelessWidget {
               // FAB spacer
               const SizedBox(width: 72),
               // Last 2 nav items
-              ...items
-                  .sublist(2)
-                  .asMap()
-                  .entries
-                  .map(
+              ...items.sublist(2).asMap().entries.map(
                     (entry) => Expanded(
                       child: _NavBarItem(
                         item: entry.value,

@@ -46,9 +46,8 @@ class _FocusModeScreenState extends State<FocusModeScreen>
     setState(() => _isRunning = true);
     final user = context.read<AuthProvider>().userModel;
     if (user != null) {
-      final updatedUser = await context
-          .read<ProductivityProvider>()
-          .startFocusMode(user.uid);
+      final updatedUser =
+          await context.read<ProductivityProvider>().startFocusMode(user.uid);
       if (updatedUser != null && mounted) {
         context.read<AuthProvider>().updateUserModel(updatedUser);
       }
@@ -96,16 +95,15 @@ class _FocusModeScreenState extends State<FocusModeScreen>
 
     final user = context.read<AuthProvider>().userModel;
     if (user != null) {
-      final updatedUser = await context
-          .read<ProductivityProvider>()
-          .endFocusMode(
-            user,
-            durationSeconds: actualDuration,
-            focusScore: _focusScore,
-            appUsage: remainingMins > 0
-                ? {'Early Exit': remainingMins}
-                : const {},
-          );
+      final updatedUser =
+          await context.read<ProductivityProvider>().endFocusMode(
+                user,
+                durationSeconds: actualDuration,
+                focusScore: _focusScore,
+                appUsage: remainingMins > 0
+                    ? {'Early Exit': remainingMins}
+                    : const {},
+              );
 
       // Update the auth provider with refreshed user data (streak, score, etc.)
       if (updatedUser != null && mounted) {
@@ -282,17 +280,15 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                         color: selected ? AppColors.primary : AppColors.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: selected
-                              ? AppColors.primary
-                              : AppColors.divider,
+                          color:
+                              selected ? AppColors.primary : AppColors.divider,
                         ),
                       ),
                       child: Text(
                         '${mins}m',
                         style: TextStyle(
-                          color: selected
-                              ? Colors.white
-                              : AppColors.textSecondary,
+                          color:
+                              selected ? Colors.white : AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
                           fontSize: 13,
                         ),
@@ -308,9 +304,8 @@ class _FocusModeScreenState extends State<FocusModeScreen>
             AnimatedBuilder(
               animation: _pulseController,
               builder: (context, child) {
-                final pulse = _isRunning
-                    ? 1.0 + (_pulseController.value * 0.02)
-                    : 1.0;
+                final pulse =
+                    _isRunning ? 1.0 + (_pulseController.value * 0.02) : 1.0;
                 return Transform.scale(
                   scale: pulse,
                   child: SizedBox(
@@ -348,8 +343,8 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                               _isRunning
                                   ? 'Stay focused 💪'
                                   : _isPaused
-                                  ? 'Paused'
-                                  : 'Ready to focus?',
+                                      ? 'Paused'
+                                      : 'Ready to focus?',
                               style: const TextStyle(
                                 color: AppColors.textSecondary,
                                 fontSize: 14,
@@ -466,9 +461,9 @@ class _FocusModeScreenState extends State<FocusModeScreen>
                       child: Text(
                         'Put your phone down, close distracting tabs, and take a deep breath before starting.',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primaryDark,
-                          fontSize: 13,
-                        ),
+                              color: AppColors.primaryDark,
+                              fontSize: 13,
+                            ),
                       ),
                     ),
                   ],
