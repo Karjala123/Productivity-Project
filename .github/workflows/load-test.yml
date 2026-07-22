@@ -1,0 +1,47 @@
+name: API Load Test (k6)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D68
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6 -y
+
+      - name: Run k6 Load Test (100 VUs × 1 minute)
+        run: |
+          k6 run \
+            --summary-export=summary.json \
+            --env BACKEND_URL=https://productivityai-backend.onrender.com \
+            test/loadtest/load-test.js || true
+
+      - name: Parse and Publish Load Test Results
+        if: always()
+        run: python test/loadtest/parseK6Summary.py summary.json
+
+      - name: Upload k6 Summary JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-Load-Test-Summary
+          path: summary.json

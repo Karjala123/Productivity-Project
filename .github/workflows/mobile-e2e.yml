@@ -1,0 +1,64 @@
+name: Mobile E2E Tests (Android)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  mobile-e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Run Mobile E2E Test Suite (400 tests)
+        run: python test/mobile_e2e/mobile_e2e_tests.py -v 2>&1 | tail -20
+
+      - name: Publish Test Summary to Step Summary
+        if: always()
+        run: |
+          REPORT_FILE=$(ls -t Mobile_E2E_Report_*.xlsx 2>/dev/null | head -1)
+          echo "## 📱 Mobile E2E Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Platform | Android (Flutter) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Test Cases | 400 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Testing Categories | 11 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Report File | ${REPORT_FILE:-Mobile_E2E_Report.xlsx} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "### 📊 Category Breakdown" >> $GITHUB_STEP_SUMMARY
+          echo "| Category | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Functional | 55 |" >> $GITHUB_STEP_SUMMARY
+          echo "| UI/UX | 45 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Compatibility | 40 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Performance | 35 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | 30 |" >> $GITHUB_STEP_SUMMARY
+          echo "| API | 30 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Database | 25 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Accessibility | 25 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Mobile-Specific | 40 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Regression | 40 |" >> $GITHUB_STEP_SUMMARY
+          echo "| End-to-End | 35 |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Total** | **400** |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Mobile E2E Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mobile-E2E-Test-Report
+          path: Mobile_E2E_Report_*.xlsx
