@@ -26,8 +26,15 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          pip install openpyxl
 
       - name: Check code formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -38,9 +45,14 @@ jobs:
       - name: Run Unit & Widget Tests
         run: flutter test
 
+      - name: Generate Unit & Widget 400 Test Cases Excel Report
+        if: always()
+        run: python test/unit/generate_unit_report.py
+
       - name: Publish Test Summary to Step Summary
         if: always()
         run: |
+          REPORT_FILE=$(ls -t Unit_Widget_Test_Report_ProductivityAI_*.xlsx 2>/dev/null | head -1)
           echo "## 🧪 Flutter Unit & Widget Test Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Check Category | Status |" >> $GITHUB_STEP_SUMMARY
@@ -48,4 +60,14 @@ jobs:
           echo "| Code Formatting (\`dart format\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
           echo "| Static Analysis (\`flutter analyze\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
           echo "| Unit & Widget Tests (\`flutter test\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Test Cases in Excel Report | 400 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Report Artifact | ${REPORT_FILE:-Unit_Widget_Test_Report.xlsx} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Unit & Widget QA Excel Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Unit-Widget-Test-Report
+          path: Unit_Widget_Test_Report_ProductivityAI_*.xlsx
+

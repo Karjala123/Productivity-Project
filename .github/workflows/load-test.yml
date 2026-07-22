@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install Python dependencies
+        run: pip install openpyxl
+
       - name: Setup k6 Engine
         uses: grafana/setup-k6-action@v1
 
@@ -34,9 +37,21 @@ jobs:
         if: always()
         run: python test/loadtest/parseK6Summary.py summary.json
 
+      - name: Generate Load Test 400 Records Excel Report
+        if: always()
+        run: python test/loadtest/generate_load_report.py summary.json
+
       - name: Upload k6 Summary JSON Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: k6-Load-Test-Summary
           path: summary.json
+
+      - name: Upload Load Test Excel Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Load-Test-Excel-Report
+          path: Load_Test_Report_ProductivityAI_*.xlsx
+

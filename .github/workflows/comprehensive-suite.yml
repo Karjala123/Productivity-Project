@@ -27,8 +27,15 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          pip install openpyxl
 
       - name: Check code formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -38,6 +45,17 @@ jobs:
 
       - name: Run unit & widget tests
         run: flutter test
+
+      - name: Generate Unit 400 Test Cases Excel Report
+        if: always()
+        run: python test/unit/generate_unit_report.py
+
+      - name: Upload Unit Test Excel Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Master-Unit-Widget-Test-Report
+          path: Unit_Widget_Test_Report_ProductivityAI_*.xlsx
 
   security-sast-audit:
     name: 2. Security Vulnerability Scan
@@ -162,6 +180,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install Python dependencies
+        run: pip install openpyxl
+
       - name: Setup k6
         uses: grafana/setup-k6-action@v1
 
@@ -176,12 +197,23 @@ jobs:
         if: always()
         run: python test/loadtest/parseK6Summary.py summary.json
 
+      - name: Generate Load Test 400 Records Excel Report
+        if: always()
+        run: python test/loadtest/generate_load_report.py summary.json
+
       - name: Upload k6 Summary
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Master-k6-Load-Test-Summary
           path: summary.json
+
+      - name: Upload Load Test Excel Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Master-Load-Test-Excel-Report
+          path: Load_Test_Report_ProductivityAI_*.xlsx
 
   master-executive-dashboard:
     name: Master Summary Dashboard
