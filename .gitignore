@@ -47,3 +47,7 @@ app.*.map.json
 # E2E Test Reports & Scripts
 *.xlsx
 powershell.cmd
+
+# Security Report Outputs
+security-review.md
+executive-summary.md
