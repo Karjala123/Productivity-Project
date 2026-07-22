@@ -20,10 +20,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Setup k6
+      - name: Setup k6 Engine
         uses: grafana/setup-k6-action@v1
 
-      - name: Run k6 Load Test (100 VUs × 1 minute)
+      - name: Run k6 Load Test (100 VUs x 1 minute)
         run: |
           k6 run \
             --summary-export=summary.json \
@@ -34,7 +34,7 @@ jobs:
         if: always()
         run: python test/loadtest/parseK6Summary.py summary.json
 
-      - name: Upload k6 Summary JSON
+      - name: Upload k6 Summary JSON Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
