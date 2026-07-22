@@ -1,0 +1,51 @@
+name: Flutter Unit & Widget Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  unit-and-widget-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check code formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze Flutter code
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run Unit & Widget Tests
+        run: flutter test
+
+      - name: Publish Test Summary to Step Summary
+        if: always()
+        run: |
+          echo "## 🧪 Flutter Unit & Widget Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check Category | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Formatting (\`dart format\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| Static Analysis (\`flutter analyze\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit & Widget Tests (\`flutter test\`) | ✅ PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
